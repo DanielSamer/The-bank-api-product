@@ -2,10 +2,12 @@ package com.mudson.The_bank_api_product.service.Impl;
 
 import com.mudson.The_bank_api_product.dto.AccountInfo;
 import com.mudson.The_bank_api_product.dto.BankResponse;
+import com.mudson.The_bank_api_product.dto.EmailDetails;
 import com.mudson.The_bank_api_product.dto.UserRequest;
 import com.mudson.The_bank_api_product.entity.User;
 import com.mudson.The_bank_api_product.repository.UserRepository;
 import com.mudson.The_bank_api_product.utils.AccountUtils;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EmailService emailService;
+
+
 
     @Override
+    @Transactional //This annotation reverts any update happens on the database if any exception happened in the function
     public BankResponse createAccount(UserRequest userRequest) {
         /**
          * Creating an account - saving a new user into the bd
@@ -44,10 +51,18 @@ public class UserServiceImpl implements UserService {
                 .phoneNumber(userRequest.getPhoneNumber())
                 .alternativePhoneNumber(userRequest.getAlternativePhoneNumber())
                 .status("ACTIVE")
-
                 .build();
 
         User savedUser = userRepository.save(newUser);
+        //Send email Alert
+        EmailDetails emailDetails = EmailDetails.builder()
+                .recipient(savedUser.getEmail())
+                .subject("ACCOUNT CREATION")
+                .messageBody("Congratulations! Your account has been successfully created!!\nYour aaccount details: \n " +
+                        "Account Name: " + savedUser.getFirstName() + " " + savedUser.getLastName() + " " + savedUser.getOtherName() + "\nAccount Number: " + savedUser.getAccountNumber())
+                .build();
+        emailService.sendEmailAlert(emailDetails);
+
         return BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_CREATION_SUCCESS)
                 .responseMessage(AccountUtils.ACCOUNT_CREATION_MESSAGE)
@@ -59,5 +74,6 @@ public class UserServiceImpl implements UserService {
                 .build();
 
     }
+
 
 }
