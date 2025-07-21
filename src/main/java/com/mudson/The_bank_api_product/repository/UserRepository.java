@@ -9,4 +9,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //bind the Interface to the enitites (in this case "user")
 
     Boolean existsByEmail(String email);
+
+    Boolean existsByAccountNumber(String accountNumber);
+
+    User findByAccountNumber(String accountNumber);
+
 }
