@@ -1,9 +1,6 @@
 package com.mudson.The_bank_api_product.service.Impl;
 
-import com.mudson.The_bank_api_product.dto.BankResponse;
-import com.mudson.The_bank_api_product.dto.CreditDebitRequest;
-import com.mudson.The_bank_api_product.dto.EnquiryRequest;
-import com.mudson.The_bank_api_product.dto.UserRequest;
+import com.mudson.The_bank_api_product.dto.*;
 
 public interface UserService {
     BankResponse createAccount (UserRequest userRequest);
@@ -14,6 +11,9 @@ public interface UserService {
 
     BankResponse creditAccount(CreditDebitRequest request);
 
-
     BankResponse debitAccount(CreditDebitRequest request);
+
+    BankResponse transfer (TransferRequest request);
+
+
 }

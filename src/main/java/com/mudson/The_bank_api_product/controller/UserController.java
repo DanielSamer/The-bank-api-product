@@ -1,10 +1,8 @@
 package com.mudson.The_bank_api_product.controller;
 
-import com.mudson.The_bank_api_product.dto.BankResponse;
-import com.mudson.The_bank_api_product.dto.CreditDebitRequest;
-import com.mudson.The_bank_api_product.dto.EnquiryRequest;
-import com.mudson.The_bank_api_product.dto.UserRequest;
+import com.mudson.The_bank_api_product.dto.*;
 import com.mudson.The_bank_api_product.service.Impl.UserService;
+import org.apache.logging.log4j.util.PerformanceSensitive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +38,11 @@ public class UserController {
     public BankResponse debitAccount (@RequestBody CreditDebitRequest request ){
         return userService.debitAccount(request);
 
+    }
+
+    @PostMapping("/transfer")
+    public BankResponse transfer (@RequestBody TransferRequest request ){
+        return userService.transfer(request);
     }
 
 }
