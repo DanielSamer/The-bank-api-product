@@ -73,6 +73,6 @@ Potential improvements to the system could include implementing JWT-based authen
 
 This project was developed as part of a backend engineering internship at Suez Canal Bank, working within the Digital Transformation Department. The experience provided invaluable exposure to professional software development practices in the banking sector and demonstrated how academic knowledge translates into practical solutions for real-world business requirements.
 
-## License
+
 
 This project was developed for educational and training purposes as part of an internship program at Suez Canal Bank.
